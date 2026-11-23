@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Вложения Mail.ru → Excel",
+  "version": "1.0.3",
+  "description": "Собирает все вложения прокруткой и сохраняет Excel с размерами, авторами и ссылками на письма.",
+  "minimum_chrome_version": "111",
+  "permissions": ["storage", "unlimitedStorage", "downloads", "offscreen"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html" },
+  "content_scripts": [
+    {
+      "matches": ["https://cloud.mail.ru/*"],
+      "all_frames": true,
+      "world": "MAIN",
+      "run_at": "document_start",
+      "js": ["bridge.js"]
+    },
+    {
+      "matches": ["https://cloud.mail.ru/*"],
+      "all_frames": true,
+      "run_at": "document_idle",
+      "js": ["core.js", "xlsx.js", "collector.js"]
+    }
+  ]
+}
